@@ -14,7 +14,7 @@ Some environement variables can be used:
 
 ## Docker usage
 
-Available as a Docker Hub Package (https://hub.docker.com/repository/docker/jesssys/yeelight-mqtt).²
+Available as a Docker Hub Package (https://hub.docker.com/repository/docker/jesssys/yeelight-mqtt)
 
 Edit the variables in the `docker-compose.yml` file and just run `docker-compose up`
 

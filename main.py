@@ -15,7 +15,7 @@ bulb = Bulb(LIGHT_IP)
 AVAILABILITY_PING_DELAY = os.environ.get('AVAILABILITY_PING_DELAY') or 120
 
 MQTT_BROKER = os.environ.get('MQTT_BROKER')
-MQTT_PORT = os.environ.get('MQTT_PORT') or 1883
+MQTT_PORT = int(os.environ.get('MQTT_PORT')) or 1883
 MQTT_HA_DISCOVERY_TOPIC_BASE = os.environ.get('MQTT_HA_DISCOVERY_TOPIC') or 'homeassistant'
 MQTT_HA_DISCOVERY_TOPIC_BASE = MQTT_HA_DISCOVERY_TOPIC_BASE + "/light"
 

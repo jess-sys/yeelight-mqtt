@@ -1,13 +1,10 @@
 import os, uuid, json, sys
 import paho.mqtt.client as mqtt
 import paho.mqtt.publish as publish
-from timeloop import Timeloop
 from datetime import timedelta
 
 sys.path.append('./yeelight')
 from yeelight import Bulb
-
-tl = Timeloop()
 
 LIGHT_IP = os.environ.get('LIGHT_IP')
 bulb = Bulb(LIGHT_IP)
@@ -40,13 +37,6 @@ def check_gen_uuid():
         f.close()
 
 
-@tl.job(interval=timedelta(seconds=AVAILABILITY_PING_DELAY))
-def publish_availability():
-    print("Sending availability...")
-    publish.single(MQTT_HA_DISCOVERY_TOPIC_BASE + "/" + guid["UUID1"] + "/availability", "online", hostname=MQTT_BROKER)
-    publish.single(MQTT_HA_DISCOVERY_TOPIC_BASE + "/" + guid["UUID2"] + "/availability", "online", hostname=MQTT_BROKER)
-
-
 def on_connect(client, userdata, flags, rc):
     print("Connected to " + MQTT_BROKER)
     print("Subscribing to : " + MQTT_HA_DISCOVERY_TOPIC_BASE + "/" + guid["UUID1"] + "/command")
@@ -54,7 +44,6 @@ def on_connect(client, userdata, flags, rc):
     print("Subscribing to : " + MQTT_HA_DISCOVERY_TOPIC_BASE + "/" + guid["UUID2"] + "/command")
     client.subscribe(MQTT_HA_DISCOVERY_TOPIC_BASE + "/" + guid["UUID2"] + "/command")
     setup()
-    tl.start(block=False)
 
 
 def handle_yeelight(type, payload):
